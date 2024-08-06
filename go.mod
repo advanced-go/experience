@@ -4,7 +4,7 @@ go 1.21.4
 
 require (
 	github.com/advanced-go/postgresql v0.0.0-20240720114046-6e895f523ca7
-	github.com/advanced-go/stdlib v0.0.0-20240726121946-7eb4ddb1fa65
+	github.com/advanced-go/stdlib v0.0.0-20240731141410-549a004bb5f4
 )
 
 require (
