@@ -22,8 +22,16 @@ func GetRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status)
 	return Routing{Location: "", Percentage: -1}, core.StatusOK()
 }
 
-
 */
+
+// ResetRoutingScope - if the current routing acton is configured, then add a nil routing action,
+// with a corresponding inference.
+func ResetRoutingScope(ctx context.Context, origin core.Origin, agentId string) *core.Status {
+	// If the current routing action is configured, then add an action to reset.
+	// Also add an inference
+
+	return core.StatusOK()
+}
 
 // AddRateLimiting - insert rate limiting action
 func AddRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
