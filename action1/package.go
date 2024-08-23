@@ -24,9 +24,9 @@ func GetRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status)
 
 */
 
-// ResetRoutingScope - if the current routing acton is configured, then add a nil routing action,
+// ResetRouting - if the current routing acton is configured, then add a nil routing action,
 // with a corresponding inference.
-func ResetRoutingScope(ctx context.Context, origin core.Origin, agentId string) *core.Status {
+func ResetRouting(ctx context.Context, origin core.Origin, agentId string) *core.Status {
 	// If the current routing action is configured, then add an action to reset.
 	// Also add an inference
 
