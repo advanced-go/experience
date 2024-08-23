@@ -1,16 +1,13 @@
 package action1
 
-import "time"
+// Actions - no updates as history with corresponding inference is needed
 
-type Detail struct {
-	EntryId     int       `json:"entry-id"`
-	RouteName   string    `json:"route"`
-	CreatedTS   time.Time `json:"created-ts"`
-	InferenceId int       `json:"inference-id"`
-
-	Limit      float64 `json:"limit"`
-	Burst      int     `json:"burst"`
-	Percentage int     `json:"percentage"`
-	Location   string  `json:"location"`
-	StatusCode string  `json:"status-code"`
+type Actions struct {
+	RouteName        string  `json:"route"`
+	RedirectLocation string  `json:"redirect-location"`
+	StatusCode       string  `json:"status-code"`
+	Limit            float64 `json:"limit"`
+	Burst            int     `json:"burst"`
+	RouteLocation    string  `json:"route-location"`
+	Percentage       int     `json:"percentage"`
 }

@@ -27,14 +27,14 @@ const (
 
 var (
 	//safeEntry = common.NewSafe()
-	entryData = []Entry{
+	entryData = []entry{
 		{Region: "us-west1", Zone: "a", Host: "www.host1.com", AgentId: "agent-id", CreatedTS: time.Date(2024, 6, 10, 7, 120, 35, 0, time.UTC)},
 		{Region: "us-west1", Zone: "a", Host: "www.host2.com", AgentId: "agent-id", CreatedTS: time.Date(2024, 6, 10, 7, 120, 35, 0, time.UTC)},
 	}
 )
 
 // Entry - host
-type Entry struct {
+type entry struct {
 	EntryId   int       `json:"entry-id"`
 	Region    string    `json:"region"`
 	Zone      string    `json:"zone"`

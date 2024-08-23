@@ -9,19 +9,25 @@ const (
 	PkgPath = "github/advanced-go/experience/action1"
 )
 
+// TODO : need a way to retrieve all current actions for a given host and route
+
+/*
 // GetRateLimiting - get latest rate limiting action
 func GetRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
 	return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
 }
 
-// AddRateLimiting - insert rate limiting action
-func AddRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
-	return core.StatusOK()
-}
-
 // GetRouting - get latest routing action
 func GetRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
 	return Routing{Location: "", Percentage: -1}, core.StatusOK()
+}
+
+
+*/
+
+// AddRateLimiting - insert rate limiting action
+func AddRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
+	return core.StatusOK()
 }
 
 // AddRouting - insert routing action
