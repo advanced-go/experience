@@ -1,0 +1,14 @@
+
+Listing of features to be added:
+
+
+Metrics:
+  How to determine when a host is becoming saturated?
+    - Threshold based on latency, and what is that number, in milliseconds?
+
+  How to determine when an upstream host is becoming saturated?
+    - Threshold based on :
+       1. Controller timeouts
+       2. Upstream response status codes:
+           - Timeout
+           - 500
