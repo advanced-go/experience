@@ -23,7 +23,7 @@ func get[E core.ErrorHandler, T pgxsql.Scanner[T]](ctx context.Context, h http.H
 	h2.Set(core.XFrom, module.Authority)
 	entries, status = query(ctx, h, resource, template, values)
 	if !status.OK() {
-		e.Handle(status, core.RequestId(h))
+		e.Handle(status.WithRequestId(h))
 	}
 	return
 }

@@ -3,8 +3,8 @@ module github.com/advanced-go/experience
 go 1.21.4
 
 require (
-	github.com/advanced-go/postgresql v0.0.0-20240720114046-6e895f523ca7
-	github.com/advanced-go/stdlib v0.0.0-20240731141410-549a004bb5f4
+	github.com/advanced-go/postgresql v0.0.0-20240914153537-d55ad0af58ff
+	github.com/advanced-go/stdlib v0.0.0-20240916163233-77ffc51165de
 )
 
 require (

@@ -25,7 +25,7 @@ func put[E core.ErrorHandler, T pgxsql.Scanner[T]](ctx context.Context, h http.H
 	h2.Set(core.XFrom, module.Authority)
 	_, status = insert(ctx, h, resource, template, body)
 	if !status.OK() {
-		e.Handle(status, core.RequestId(h))
+		e.Handle(status.WithRequestId(h))
 	}
 	return
 
