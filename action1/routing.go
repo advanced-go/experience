@@ -19,7 +19,13 @@ type Routing struct {
 	Percentage  int       `json:"percentage"`
 }
 
-func (r Routing) IsActive() bool {
+func NewRouting() *Routing {
+	r := new(Routing)
+	r.Percentage = -1
+	return r
+}
+
+func (r *Routing) IsActive() bool {
 	return r.Location != "" && r.Percentage >= 0
 }
 

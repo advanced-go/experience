@@ -21,6 +21,13 @@ type RateLimiting struct {
 	Burst int     `json:"burst"`
 }
 
-func (r RateLimiting) IsActive() bool {
+func NewRateLimiting() *RateLimiting {
+	r := new(RateLimiting)
+	r.Limit = -1
+	r.Burst = -1
+	return r
+}
+
+func (r *RateLimiting) IsActive() bool {
 	return r.Limit >= 0 && r.Burst >= 0
 }
