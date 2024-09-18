@@ -38,6 +38,11 @@ var (
 	}
 )
 
+func NewEntry() *Entry {
+	i := new(Entry)
+	return i
+}
+
 // Entry - host
 type Entry struct {
 	Region    string    `json:"region"`
