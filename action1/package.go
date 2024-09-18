@@ -11,72 +11,55 @@ const (
 
 // TODO : need a way to retrieve all current actions for a given host and route
 
-// ingress - interface
-type ingress struct {
-	CurrentRateLimiting func(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status)
-	AddRateLimiting     func(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status
-}
-
-var Ingress = func() *ingress {
-	return &ingress{
-		CurrentRateLimiting: func(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
-			return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
-		},
-		AddRateLimiting: func(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
-			return core.StatusOK()
-		},
-	}
-}()
-
-// IngressCurrentRateLimiting - get latest rate limiting action
-func IngressCurrentRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
+// GetIngressActiveRateLimiting - get latest rate limiting action
+func GetIngressActiveRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
 	return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
 }
 
-// IngressAddRateLimiting - insert rate limiting action
-func IngressAddRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
+// AddIngressRateLimiting - insert rate limiting action
+func AddIngressRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
 	return core.StatusOK()
 }
 
-// IngressCurrentRouting - get latest routing action
-func IngressCurrentRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
+// GetIngressActiveRouting - get latest routing action
+func GetIngressActiveRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
 	return Routing{Location: "", Percentage: -1}, core.StatusOK()
 }
 
-// IngressAddRouting - insert routing action
-func IngressAddRouting(ctx context.Context, origin core.Origin, action Routing) *core.Status {
+// AddIngressRouting - insert routing action
+func AddIngressRouting(ctx context.Context, origin core.Origin, action Routing) *core.Status {
 	return core.StatusOK()
 }
 
-// IngressAddRedirect - insert redirect action
-func IngressAddRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
+// AddIngressRedirect - insert redirect action
+func AddIngressRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
 	return core.StatusOK()
 }
 
 // Egress
 
-// EgressCurrentRateLimiting - get latest rate limiting action
-func EgressCurrentRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
+// GetEgressActiveRateLimiting - get latest rate limiting action
+func GetEgressActiveRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
 	return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
 }
 
-// EgressAddRateLimiting - insert rate limiting action
-func EgressAddRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
+// AddEgressRateLimiting - insert rate limiting action
+func AddEgressRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
 	return core.StatusOK()
 }
 
-// EgressCurrentRouting - get latest routing action
-func EgressCurrentRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
+// GetEgressActiveRouting - get latest routing action
+func GetEgressActiveRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
 	return Routing{Location: "", Percentage: -1}, core.StatusOK()
 }
 
-// EgressAddRouting - insert routing action
-func EgressAddRouting(ctx context.Context, origin core.Origin, action Routing) *core.Status {
+// AddEgressRouting - insert routing action
+func AddEgressRouting(ctx context.Context, origin core.Origin, action Routing) *core.Status {
 	return core.StatusOK()
 }
 
-// EgressAddRedirect - insert redirect action
-func EgressAddRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
+// AddEgressRedirect - insert redirect action
+func AddEgressRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
 	return core.StatusOK()
 }
 
@@ -106,4 +89,23 @@ func AddRedirect(ctx context.Context, origin core.Origin, action Redirect) *core
 }
 
 
+*/
+
+/*
+// ingress - interface
+type ingress struct {
+	CurrentRateLimiting func(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status)
+	AddRateLimiting     func(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status
+}
+
+var Ingress = func() *ingress {
+	return &ingress{
+		CurrentRateLimiting: func(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
+			return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
+		},
+		AddRateLimiting: func(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
+			return core.StatusOK()
+		},
+	}
+}()
 */
