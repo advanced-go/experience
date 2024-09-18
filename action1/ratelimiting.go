@@ -1,6 +1,8 @@
 package action1
 
-import "time"
+import (
+	"github.com/advanced-go/stdlib/core"
+)
 
 // RateLimiting - ingress and egress
 // AgentId     string    `json:"agent-id"`
@@ -8,17 +10,11 @@ import "time"
 // 1. Nil or not configured - both values == -1
 // 2. Configured - both values >= 0
 type RateLimiting struct {
-	EntryId     int       `json:"entry-id"`
-	Region      string    `json:"region"`
-	Zone        string    `json:"zone"`
-	SubZone     string    `json:"sub-zone"`
-	Host        string    `json:"host"`
-	Route       string    `json:"route"`
-	CreatedTS   time.Time `json:"created-ts"`
-	InferenceId int       `json:"inference-id"`
-
-	Limit float64 `json:"limit"`
-	Burst int     `json:"burst"`
+	AgentId     string      `json:"agent-id"`
+	Origin      core.Origin `json:"origin"`
+	InferenceId int         `json:"inference-id"`
+	Limit       float64     `json:"limit"`
+	Burst       int         `json:"burst"`
 }
 
 func NewRateLimiting() *RateLimiting {

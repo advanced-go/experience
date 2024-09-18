@@ -10,32 +10,30 @@ import (
 	"net/url"
 )
 
-func get[E core.ErrorHandler, T pgxsql.Scanner[T]](ctx context.Context, h http.Header, values url.Values, resource, template string, query pgxsql.QueryFuncT[T]) (entries []T, h2 http.Header, status *core.Status) {
+func get[E core.ErrorHandler, T pgxsql.Scanner[T]](ctx context.Context, h http.Header, values url.Values, resource, template string) (entries []T, h2 http.Header, status *core.Status) {
 	var e E
 
 	if values == nil {
 		return nil, h2, core.StatusNotFound()
 	}
-	if query == nil {
-		query = testQuery[T] //pgxsql.QueryT[T]
-	}
+
 	h2 = httpx.Forward(h2, h)
 	h2.Set(core.XFrom, module.Authority)
-	entries, status = query(ctx, h, resource, template, values)
+	entries, status = pgxsql.QueryT[T](ctx, h, resource, template, values)
 	if !status.OK() {
 		e.Handle(status.WithRequestId(h))
 	}
 	return
 }
 
-func testQuery[T pgxsql.Scanner[T]](_ context.Context, _ http.Header, _, _ string, values map[string][]string, _ ...any) (entries []T, status *core.Status) {
-	status = core.StatusOK()
-	switch p := any(&entries).(type) {
-	case *[]Entry:
-		defer safeEntry.Lock()()
-		*p = append(*p, entryData...)
-	default:
-		status = core.NewStatusError(http.StatusBadRequest, core.NewInvalidBodyTypeError(entries))
+func validEntry(values url.Values, e Entry) bool {
+	if values == nil {
+		return false
 	}
-	return
+	filter := core.NewOrigin(values)
+	if !core.OriginMatch(e.Origin, filter) {
+		return false
+	}
+	// Additional filtering
+	return true
 }

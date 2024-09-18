@@ -3,10 +3,7 @@ package inference1
 import (
 	"errors"
 	"fmt"
-	"github.com/advanced-go/experience/common"
 	"github.com/advanced-go/stdlib/core"
-	"net/url"
-	"time"
 )
 
 const (
@@ -26,41 +23,27 @@ const (
 	SubZoneName   = "sub_zone"
 	HostName      = "host"
 	RouteName     = "route"
-	DetailsName   = "details"
-	ActionName    = "action"
-)
 
-var (
-	safeEntry = common.NewSafe()
-	entryData = []Entry{
-		{Region: "us-west1", Zone: "a", Host: "www.host1.com", AgentId: "agent-id", RouteName: "host", Details: "information", Action: "processed", CreatedTS: time.Date(2024, 6, 10, 7, 120, 35, 0, time.UTC)},
-		{Region: "us-west1", Zone: "a", Host: "www.host2.com", AgentId: "agent-id", RouteName: "host", Details: "text", Action: "processed", CreatedTS: time.Date(2024, 6, 10, 7, 120, 35, 0, time.UTC)},
-	}
-)
+	ActualPercentName = "actual_percent"
+	ActualValueName   = "actual_value"
+	ActualMinimumName = "actual_minimum"
 
-func NewEntry() *Entry {
-	i := new(Entry)
-	return i
-}
+	LimitPercentName = "limit_percent"
+	LimitValueName   = "limit_value"
+	LimitMinimumName = "limit_minimum"
+)
 
 // Entry - host
 type Entry struct {
-	Region    string    `json:"region"`
-	Zone      string    `json:"zone"`
-	SubZone   string    `json:"sub-zone"`
-	Host      string    `json:"host"`
-	CreatedTS time.Time `json:"created-ts"`
-
-	AgentId   string `json:"agent-id"`
-	RouteName string `json:"route"`
-
-	// Details + action
-	Details string `json:"details"`
-	Action  string `json:"action"`
+	AgentId string      `json:"agent-id"`
+	Origin  core.Origin `json:"origin"`
+	Actual  Threshold   `json:"actual"`
+	Limit   Threshold   `json:"limit"`
 }
 
-func (e Entry) Origin() core.Origin {
-	return core.Origin{Region: e.Region, Zone: e.Zone, SubZone: e.SubZone, Host: e.Host}
+func NewEntry() *Entry {
+	e := new(Entry)
+	return e //NewPercentileThreshold(&e.Actual)
 }
 
 func (Entry) Scan(columnNames []string, values []any) (e Entry, err error) {
@@ -68,24 +51,18 @@ func (Entry) Scan(columnNames []string, values []any) (e Entry, err error) {
 		switch name {
 		case AgentIdName:
 			e.AgentId = values[i].(string)
-		case CreatedTSName:
-			e.CreatedTS = values[i].(time.Time)
-
+		//case CreatedTSName:
+		//	e.CreatedTS = values[i].(time.Time)
 		case RegionName:
-			e.Region = values[i].(string)
+			e.Origin.Region = values[i].(string)
 		case ZoneName:
-			e.Zone = values[i].(string)
+			e.Origin.Zone = values[i].(string)
 		case SubZoneName:
-			e.SubZone = values[i].(string)
+			e.Origin.SubZone = values[i].(string)
 		case HostName:
-			e.Host = values[i].(string)
+			e.Origin.Host = values[i].(string)
 		case RouteName:
-			e.RouteName = values[i].(string)
-
-		case ActionName:
-			e.Action = values[i].(string)
-		case DetailsName:
-			e.Details = values[i].(string)
+			e.Origin.Route = values[i].(string)
 		default:
 			err = errors.New(fmt.Sprintf("invalid field name: %v", name))
 			return
@@ -97,16 +74,13 @@ func (Entry) Scan(columnNames []string, values []any) (e Entry, err error) {
 func (e Entry) Values() []any {
 	return []any{
 		e.AgentId,
-		e.CreatedTS,
+		//e.CreatedTS,
 
-		e.Region,
-		e.Zone,
-		e.SubZone,
-		e.Host,
-		e.RouteName,
-
-		e.Action,
-		e.Details,
+		e.Origin.Region,
+		e.Origin.Zone,
+		e.Origin.SubZone,
+		e.Origin.Host,
+		e.Origin.Route,
 	}
 }
 
@@ -117,17 +91,4 @@ func (Entry) Rows(entries []Entry) [][]any {
 		values = append(values, e.Values())
 	}
 	return values
-}
-
-func validEntry(values url.Values, e Entry) bool {
-	if values == nil {
-		return false
-	}
-	filter := core.NewOrigin(values)
-	target := core.Origin{Region: e.Region, Zone: e.Zone, SubZone: e.SubZone, Host: e.Host}
-	if !core.OriginMatch(target, filter) {
-		return false
-	}
-	// Additional filtering
-	return true
 }

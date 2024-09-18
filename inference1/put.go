@@ -8,22 +8,18 @@ import (
 	"github.com/advanced-go/stdlib/core"
 	"github.com/advanced-go/stdlib/httpx"
 	"net/http"
-	"time"
 )
 
-func put[E core.ErrorHandler, T pgxsql.Scanner[T]](ctx context.Context, h http.Header, resource, template string, body []T, insert pgxsql.InsertFuncT[T]) (h2 http.Header, status *core.Status) {
+func put[E core.ErrorHandler, T pgxsql.Scanner[T]](ctx context.Context, h http.Header, resource, template string, body []T) (h2 http.Header, status *core.Status) {
 	var e E
 
 	if len(body) == 0 {
 		status = core.NewStatusError(core.StatusInvalidContent, errors.New("error: no entries found"))
 		return nil, status
 	}
-	if insert == nil {
-		insert = testInsert[T] //pgxsql.InsertT[T]
-	}
 	h2 = httpx.Forward(h2, h)
 	h2.Set(core.XFrom, module.Authority)
-	_, status = insert(ctx, h, resource, template, body)
+	_, status = pgxsql.InsertT[T](ctx, h, resource, template, body)
 	if !status.OK() {
 		e.Handle(status.WithRequestId(h))
 	}
@@ -31,6 +27,7 @@ func put[E core.ErrorHandler, T pgxsql.Scanner[T]](ctx context.Context, h http.H
 
 }
 
+/*
 func testInsert[T pgxsql.Scanner[T]](_ context.Context, _ http.Header, _, _ string, entries []T, _ ...any) (tag pgxsql.CommandTag, status *core.Status) {
 	status = core.StatusOK()
 	switch p := any(&entries).(type) {
@@ -48,3 +45,6 @@ func testInsert[T pgxsql.Scanner[T]](_ context.Context, _ http.Header, _, _ stri
 	}
 	return
 }
+
+
+*/

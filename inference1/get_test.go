@@ -8,11 +8,11 @@ import (
 
 func ExampleGet() {
 	q := "region=*"
-	entries, _, status := get[core.Output, Entry](nil, nil, uri.BuildValues(q), inferenceResource, "", nil)
+	entries, _, status := get[core.Output, Entry](nil, nil, uri.BuildValues(q), inferenceResource, "")
 	fmt.Printf("test: get(\"%v\") -> [status:%v] [entries:%v]\n", q, status, len(entries))
 
 	q = "region=*&order=desc"
-	entries, _, status = get[core.Output, Entry](nil, nil, uri.BuildValues(q), inferenceResource, "", nil)
+	entries, _, status = get[core.Output, Entry](nil, nil, uri.BuildValues(q), inferenceResource, "")
 	fmt.Printf("test: Get(\"%v\") -> [status:%v] [entries:%v]\n", q, status, entries)
 
 	//Output:
