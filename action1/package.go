@@ -11,7 +11,22 @@ const (
 
 // TODO : need a way to retrieve all current actions for a given host and route
 
-// Ingress
+// ingress - interface
+type ingress struct {
+	CurrentRateLimiting func(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status)
+	AddRateLimiting     func(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status
+}
+
+var Ingress = func() *ingress {
+	return &ingress{
+		CurrentRateLimiting: func(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
+			return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
+		},
+		AddRateLimiting: func(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
+			return core.StatusOK()
+		},
+	}
+}()
 
 // IngressCurrentRateLimiting - get latest rate limiting action
 func IngressCurrentRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
