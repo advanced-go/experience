@@ -11,20 +11,61 @@ const (
 
 // TODO : need a way to retrieve all current actions for a given host and route
 
-// RateLimiting
+// Ingress
 
-// GetCurrentRateLimiting - get latest rate limiting action
-func GetCurrentRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
+// IngressCurrentRateLimiting - get latest rate limiting action
+func IngressCurrentRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
 	return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
 }
 
-// AddRateLimiting - insert rate limiting action
-func AddRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
+// IngressAddRateLimiting - insert rate limiting action
+func IngressAddRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
 	return core.StatusOK()
 }
 
-// Routing
+// IngressCurrentRouting - get latest routing action
+func IngressCurrentRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
+	return Routing{Location: "", Percentage: -1}, core.StatusOK()
+}
 
+// IngressAddRouting - insert routing action
+func IngressAddRouting(ctx context.Context, origin core.Origin, action Routing) *core.Status {
+	return core.StatusOK()
+}
+
+// IngressAddRedirect - insert redirect action
+func IngressAddRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
+	return core.StatusOK()
+}
+
+// Egress
+
+// EgressCurrentRateLimiting - get latest rate limiting action
+func EgressCurrentRateLimiting(ctx context.Context, origin core.Origin) (RateLimiting, *core.Status) {
+	return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
+}
+
+// EgressAddRateLimiting - insert rate limiting action
+func EgressAddRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
+	return core.StatusOK()
+}
+
+// EgressCurrentRouting - get latest routing action
+func EgressCurrentRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
+	return Routing{Location: "", Percentage: -1}, core.StatusOK()
+}
+
+// EgressAddRouting - insert routing action
+func EgressAddRouting(ctx context.Context, origin core.Origin, action Routing) *core.Status {
+	return core.StatusOK()
+}
+
+// EgressAddRedirect - insert redirect action
+func EgressAddRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
+	return core.StatusOK()
+}
+
+/*
 // GetCurrentRouting - get latest routing action
 func GetCurrentRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
 	return Routing{Location: "", Percentage: -1}, core.StatusOK()
@@ -48,3 +89,6 @@ func ResetRouting(ctx context.Context, origin core.Origin, agentId string) *core
 func AddRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
 	return core.StatusOK()
 }
+
+
+*/
