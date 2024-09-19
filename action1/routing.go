@@ -4,6 +4,10 @@ import (
 	"github.com/advanced-go/stdlib/core"
 )
 
+const (
+	RoutingDefaultPercentage = -1
+)
+
 // Routing - ingress and egress
 // Need to determine how to represent 2 states:
 // 1. Nil or not configured - location empty, percentage = -1
@@ -20,6 +24,13 @@ func NewRouting() *Routing {
 	r := new(Routing)
 	r.Percentage = -1
 	return r
+}
+
+func InitRouting(r *Routing) {
+	if r != nil {
+		r.Location = ""
+		r.Percentage = RoutingDefaultPercentage
+	}
 }
 
 func (r *Routing) IsActive() bool {

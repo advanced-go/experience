@@ -16,18 +16,18 @@ type Threshold struct {
 	Minimum int `json:"minimum"` // Used for status codes to attenuate underflow, applied to the window interval
 }
 
-func NewPercentileThreshold(t *Threshold) {
-	//t := new(Threshold)
-	t.Minimum = PercentileMinimum
-	t.Percent = PercentilePercent
-	t.Value = PercentileValue
-	//return t
+func InitPercentileThreshold(t *Threshold) {
+	if t != nil {
+		t.Minimum = PercentileMinimum
+		t.Percent = PercentilePercent
+		t.Value = PercentileValue
+	}
 }
 
-func NewStatusCodeThreshold(t *Threshold) {
-	//t := new(Threshold)
-	t.Minimum = StatusCodeMinimum
-	t.Percent = StatusCodePercent
-	t.Value = StatusCodeValue
-	//return t
+func InitStatusCodeThreshold(t *Threshold) {
+	if t != nil {
+		t.Minimum = StatusCodeMinimum
+		t.Percent = StatusCodePercent
+		t.Value = StatusCodeValue
+	}
 }

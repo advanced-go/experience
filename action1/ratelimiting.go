@@ -4,6 +4,11 @@ import (
 	"github.com/advanced-go/stdlib/core"
 )
 
+const (
+	DefaultLimit = -1
+	DefaultBurst = -1
+)
+
 // RateLimiting - ingress and egress
 // AgentId     string    `json:"agent-id"`
 // Need to represent 2 states:
@@ -22,6 +27,13 @@ func NewRateLimiting() *RateLimiting {
 	r.Limit = -1
 	r.Burst = -1
 	return r
+}
+
+func InitRateLimiting(r *RateLimiting) {
+	if r != nil {
+		r.Limit = DefaultLimit
+		r.Burst = DefaultBurst
+	}
 }
 
 func (r *RateLimiting) IsActive() bool {
