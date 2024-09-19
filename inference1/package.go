@@ -46,8 +46,11 @@ func IngressQuery(ctx context.Context, origin core.Origin) ([]Entry, *core.Statu
 */
 
 // AddIngress - insert ingress inference
-func AddIngress(ctx context.Context, h http.Header, e Entry) (int, *core.Status) {
-	_, status := put[core.Log, Entry](ctx, core.AddRequestId(h), inferenceResource, "", []Entry{e})
+func AddIngress(ctx context.Context, h http.Header, inf *Entry) (int, *core.Status) {
+	if inf == nil {
+		return -1, core.NewStatusError(core.StatusInvalidArgument, errors.New("error: inference is nil"))
+	}
+	_, status := put[core.Log, Entry](ctx, core.AddRequestId(h), inferenceResource, "", []Entry{*inf})
 	// Need to return this from database
 	inferenceId := 0
 	return inferenceId, status
@@ -73,8 +76,11 @@ func EgressQuery(ctx context.Context, origin core.Origin) ([]Entry, *core.Status
 */
 
 // AddEgress - insert egress inference
-func AddEgress(ctx context.Context, h http.Header, e Entry) (int, *core.Status) {
-	_, status := put[core.Log, Entry](ctx, core.AddRequestId(h), inferenceResource, "", []Entry{e})
+func AddEgress(ctx context.Context, h http.Header, inf *Entry) (int, *core.Status) {
+	if inf == nil {
+		return -1, core.NewStatusError(core.StatusInvalidArgument, errors.New("error: inference is nil"))
+	}
+	_, status := put[core.Log, Entry](ctx, core.AddRequestId(h), inferenceResource, "", []Entry{*inf})
 	// Need to return from database
 	inferenceId := 0
 	return inferenceId, status

@@ -2,6 +2,7 @@ package action1
 
 import (
 	"context"
+	"errors"
 	"github.com/advanced-go/stdlib/core"
 )
 
@@ -16,23 +17,32 @@ func GetIngressActiveRateLimiting(ctx context.Context, origin core.Origin) (Rate
 	return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
 }
 
-// AddIngressRateLimiting - insert rate limiting action
-func AddIngressRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
-	return core.StatusOK()
-}
-
 // GetIngressActiveRouting - get latest routing action
 func GetIngressActiveRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
 	return Routing{Location: "", Percentage: -1}, core.StatusOK()
 }
 
+// AddIngressRateLimiting - insert rate limiting action
+func AddIngressRateLimiting(ctx context.Context, origin core.Origin, action *RateLimiting) *core.Status {
+	if action == nil {
+		return core.NewStatusError(core.StatusInvalidArgument, errors.New("error: action is nil"))
+	}
+	return core.StatusOK()
+}
+
 // AddIngressRouting - insert routing action
-func AddIngressRouting(ctx context.Context, origin core.Origin, action Routing) *core.Status {
+func AddIngressRouting(ctx context.Context, origin core.Origin, action *Routing) *core.Status {
+	if action == nil {
+		return core.NewStatusError(core.StatusInvalidArgument, errors.New("error: action is nil"))
+	}
 	return core.StatusOK()
 }
 
 // AddIngressRedirect - insert redirect action
-func AddIngressRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
+func AddIngressRedirect(ctx context.Context, origin core.Origin, action *Redirect) *core.Status {
+	if action == nil {
+		return core.NewStatusError(core.StatusInvalidArgument, errors.New("error: action is nil"))
+	}
 	return core.StatusOK()
 }
 
@@ -43,23 +53,32 @@ func GetEgressActiveRateLimiting(ctx context.Context, origin core.Origin) (RateL
 	return RateLimiting{Limit: -1, Burst: -1}, core.StatusOK()
 }
 
-// AddEgressRateLimiting - insert rate limiting action
-func AddEgressRateLimiting(ctx context.Context, origin core.Origin, action RateLimiting) *core.Status {
-	return core.StatusOK()
-}
-
 // GetEgressActiveRouting - get latest routing action
 func GetEgressActiveRouting(ctx context.Context, origin core.Origin) (Routing, *core.Status) {
 	return Routing{Location: "", Percentage: -1}, core.StatusOK()
 }
 
+// AddEgressRateLimiting - insert rate limiting action
+func AddEgressRateLimiting(ctx context.Context, origin core.Origin, action *RateLimiting) *core.Status {
+	if action == nil {
+		return core.NewStatusError(core.StatusInvalidArgument, errors.New("error: action is nil"))
+	}
+	return core.StatusOK()
+}
+
 // AddEgressRouting - insert routing action
-func AddEgressRouting(ctx context.Context, origin core.Origin, action Routing) *core.Status {
+func AddEgressRouting(ctx context.Context, origin core.Origin, action *Routing) *core.Status {
+	if action == nil {
+		return core.NewStatusError(core.StatusInvalidArgument, errors.New("error: action is nil"))
+	}
 	return core.StatusOK()
 }
 
 // AddEgressRedirect - insert redirect action
-func AddEgressRedirect(ctx context.Context, origin core.Origin, action Redirect) *core.Status {
+func AddEgressRedirect(ctx context.Context, origin core.Origin, action *Redirect) *core.Status {
+	if action == nil {
+		return core.NewStatusError(core.StatusInvalidArgument, errors.New("error: action is nil"))
+	}
 	return core.StatusOK()
 }
 
