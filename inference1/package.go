@@ -7,6 +7,7 @@ import (
 	json2 "github.com/advanced-go/stdlib/json"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 const (
@@ -45,8 +46,13 @@ func IngressQuery(ctx context.Context, origin core.Origin) ([]Entry, *core.Statu
 
 */
 
-// AddIngress - insert ingress inference
-func AddIngress(ctx context.Context, h http.Header, inf *Entry) (int, *core.Status) {
+// Query - inference query
+func Query(ctx context.Context, origin core.Origin, from time.Time, to time.Time, ingress bool) ([]Entry, *core.Status) {
+	return []Entry{}, core.StatusOK()
+}
+
+// Add - insert inference
+func Add(ctx context.Context, h http.Header, inf *Entry, ingress bool) (int, *core.Status) {
 	if inf == nil {
 		return -1, core.NewStatusError(core.StatusInvalidArgument, errors.New("error: inference is nil"))
 	}
@@ -57,23 +63,22 @@ func AddIngress(ctx context.Context, h http.Header, inf *Entry) (int, *core.Stat
 }
 
 /*
+
 // IngressInsertInterval - insert ingress interval inference
 func IngressInsertInterval(ctx context.Context, h http.Header, e Entry) *core.Status {
 	_, status := put[core.Log, Entry](ctx, core.AddRequestId(h), inferenceResource, "", []Entry{e}, nil)
 	return status
 }
-*/
 
 // Egress
 
-/*
+
 // EgressQuery - query egress inference
 func EgressQuery(ctx context.Context, origin core.Origin) ([]Entry, *core.Status) {
 	return nil, core.StatusOK()
 }
 
 
-*/
 
 // AddEgress - insert egress inference
 func AddEgress(ctx context.Context, h http.Header, inf *Entry) (int, *core.Status) {
@@ -86,7 +91,6 @@ func AddEgress(ctx context.Context, h http.Header, inf *Entry) (int, *core.Statu
 	return inferenceId, status
 }
 
-/*
 // EgressInsertInterval - insert egress interval inference
 func EgressInsertInterval(ctx context.Context, h http.Header, e Entry) *core.Status {
 	_, status := put[core.Log, Entry](ctx, core.AddRequestId(h), inferenceResource, "", []Entry{e}, nil)
