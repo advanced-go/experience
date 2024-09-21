@@ -52,14 +52,14 @@ func Query(ctx context.Context, origin core.Origin, from time.Time, to time.Time
 }
 
 // Add - insert inference
-func Add(ctx context.Context, h http.Header, inf *Entry, ingress bool) (int, *core.Status) {
+func Add(ctx context.Context, origin core.Origin, inf *Entry, ingress bool) (int, *core.Status) {
 	if inf == nil {
 		return -1, core.NewStatusError(core.StatusInvalidArgument, errors.New("error: inference is nil"))
 	}
-	_, status := put[core.Log, Entry](ctx, core.AddRequestId(h), inferenceResource, "", []Entry{*inf})
+	//_, status := put[core.Log, Entry](ctx, core.AddRequestId(h), inferenceResource, "", []Entry{*inf})
 	// Need to return this from database
 	inferenceId := 0
-	return inferenceId, status
+	return inferenceId, core.StatusOK()
 }
 
 /*
